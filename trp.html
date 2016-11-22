@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js">
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="js/d3.js" charset="utf-8"></script>
+<style>
+
+body {
+  font: 10px sans-serif;
+  background: linear-gradient(-20deg,  #5C258D 20%, #4389A2 80%);
+   background: -webkit-gradient(-20deg, #5C258D 20%, #4389A2 80%);
+ background: -moz-linear-gradient(-20deg,  #5C258D 20%, #4389A2 80%);
+
+}
+
+#pie {
+  background: #ffffff;
+  padding: 40px;
+height: 600px;
+    width: 100%;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+ 
+    
+
+}
+.p{
+  color:white;
+  text-align: center;
+  color: #ffffff;
+  font-size: 1vw;
+   font-family: 'Titillium Web', sans-serif;
+    margin-top:30px ;
+}
+
+.information{
+  background: #ffffff;
+  padding: 40px;
+
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+ 
+    
+    color:#dc3912;
+    font-size: 20px;
+   font-family: 'Titillium Web', sans-serif;
+   text-align: justify;
+ 
+}
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top:3%;
+}
+</style>
+</head>
+<body>
+<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1.1','packages':['corechart']}]}">
+</script>
+<p class="p">Number of people using different means of transportation to work <b id='boldStuff'></b></p>
+<div class="row" > 
+    <div class="col-md-8">
+      <div id="pie"></div>
+      </div>
+<div class="col-md-4">
+
+<div class="information">
+<p style="margin-top:-7px;font-size: 1vw">Number of people using car, truck or van:<p style="font-size: 1vw" id="car"></p></p>
+<p style="font-size: 1vw">Number of people using bus, trolley bus or streetcar:<p style="font-size: 1vw" id="bus"></p></p>
+<p style="font-size: 1vw">Number of people using subway or railroad:<p style="font-size: 1vw" id="sub"></p></p>
+<p style="font-size: 1vw">Number of people using taxi:<p style="font-size: 1vw" id="taxi"></p></p>
+<p style="font-size: 1vw">Number of people using bicycle or motorcycle:<p style="font-size: 1vw" id="bike"></p></p>
+</div>
+</div>
+</div>
+<script>
+var car=0;var bus=0;var sub=0;var taxi=0;var bike=0;
+var name=localStorage.getItem("stname"); 
+var code=localStorage.getItem("stcode");
+document.getElementById('boldStuff').innerHTML = name; 
+d3.csv("trp.csv", function(error, csv) {
+  if (error) throw error;
+
+  var data = csv;
+
+  for(var i=0; i<data.length;i++)
+  {
+    if(data[i].c1==code)
+    {
+      index=i;
+      break;
+    }
+  }
+
+  for(var i=index; i<data.length;i++)
+  {
+    if(data[i].c1!=code)
+    {
+      index2=i;
+      break;
+    }
+  }
+  
+for(var i=index; i<index2;i++)
+{
+if(data[i].c2=="1"){++car;}
+if(data[i].c2=="2" || data[i].c2=="3"){++bus;}
+if(data[i].c2=="4" || data[i].c2=="5"){++sub;}
+if(data[i].c2=="7"){++taxi;}
+if(data[i].c2=="8" || data[i].c2=="9"){++bike;}
+
+
+} 
+
+console.log(car);
+console.log(bus);
+console.log(bike);
+console.log(sub);
+console.log(taxi);
+document.getElementById('car').innerHTML=car;
+document.getElementById('bus').innerHTML=bus;
+document.getElementById('sub').innerHTML=sub;
+document.getElementById('taxi').innerHTML=taxi;
+document.getElementById('bike').innerHTML=bike;
+
+
+ google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Transportation', 'Number of people who use it'],
+          ['Car',car],
+          ['Bus or Streetcar',bus],
+          ['Taxi',taxi],
+          ['Subway or Railroad',sub],
+          ['Bicycle or Motorcycle',bike]
+        ]);
+
+        var options = {
+         chartArea: {top:0, left:50, height:'100%', width:'100%'},
+          is3D: true,
+          
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('pie'));
+        chart.draw(data, options);
+      
+
+     function resizeHandler () {
+        chart.draw(data, options);
+    }
+    if (window.addEventListener) {
+        window.addEventListener('resize', resizeHandler, false);
+    }
+    else if (window.attachEvent) {
+        window.attachEvent('onresize', resizeHandler);
+    }
+}
+});
+	
+</script>
+</body>
+</html>

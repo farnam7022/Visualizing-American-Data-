@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" type="text/css" href="css/form.css">
+<script src="js/raphael-min.js"></script>
+<script src="js/us-map-svg.js"></script>
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <style>
+  .row {
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top:3%;
+}
+
+  </style>
+</head>
+<body>
+  
+<script type="text/javascript">
+
+
+  window.onload = function () {
+    document.getElementById("stname").value = "";
+    var R = Raphael("frame", 1000, 700),
+      attr = {
+      "fill": "#007777",
+      "stroke": "#c1bdbf",
+      "stroke-opacity": "1",
+      "stroke-linejoin": "round",
+      "stroke-miterlimit": "4",
+      "stroke-width": "0.75",
+      "stroke-dasharray": "none"
+    },
+    usRaphael = {};
+    var name;
+    var code;
+    for (var state in usMap) {
+      usRaphael[state] = R.path(usMap[state]).attr(attr);
+    }
+    
+   
+    for (var state in usRaphael) {
+      usRaphael[state].color = Raphael.getColor();
+      
+      (function (st, state) {
+
+        st[0].style.cursor = "pointer";
+
+        st[0].onmouseover = function () {
+          st.animate({fill: st.color}, 500);
+          st.toFront();
+          R.safari();
+
+          
+        };
+
+        st[0].onmouseout = function () {
+          st.animate({fill: " #179b77"}, 500);
+          st.toFront();
+          R.safari();
+        }; 
+        st[0].onclick=  function () {
+console.log(state);
+          if(state=="al")
+            {name="ALABAMA";code="1";}
+          if(state=="ak")
+            {name="ALASKA"; code="2";}
+          if(state=="az")
+            {name="ARIZONA";code="4";}
+          if(state=="ar")
+            {name="ARKANSAS";code="5";}
+          if(state=="ca")
+            {name="CALIFORNIA";code="6";}
+          if(state=="co")
+            {name="COLORADO";code="8";}
+          if(state=="ct")
+            {name="CONNECTICUT";code="9"}
+          if(state=="de")
+            {name="DELAWARE";code="10";}
+          if(state=="dc")
+            {name="DISTRICT OF COLUMBIA";code="11";}
+          if(state=="fl")
+            {name="FLORIDA";code="12";}
+          if(state=="ga")
+            {name="GEORGIA"; code="13";}
+          if(state=="hi")
+            {name="HAWAII";code="15";}
+           if(state=="id")
+            {name="IDAHO";code="16";}
+          if(state=="il")
+            {name="ILLINOIS";code="17";}
+          if(state=="in")
+            {name="INDIANA";code="18";}
+          if(state=="ia")
+            {name="IOWA";code="19";}
+          if(state=="ks")
+            {name="KANSAS";code="20"}
+          if(state=="ky")
+            {name="KENTUCKY";code="21";}
+          if(state=="la")
+            {name="LOUISIANA";code="22";}
+          if(state=="me")
+            {name="MAINE";code="23";}
+          if(state=="md")
+            {name="MARYLAND"; code="24";}
+          if(state=="ma")
+            {name="MASSACHUSETTS";code="25";}
+          if(state=="mi")
+            {name="MICHIGAN";code="26";}
+          if(state=="mn")
+            {name="MINNESOTA";code="27";}
+          if(state=="ms")
+            {name="MISSISSIPPI";code="28";}
+          if(state=="mo")
+            {name="MISSOURI";code="29"}
+          if(state=="mt")
+            {name="MONTANA";code="30";}
+          if(state=="ne")
+            {name="NEBRASKA";code="31";}
+          if(state=="nv")
+            {name="NEVADA";code="32";}
+          if(state=="nh")
+            {name="NEW HAMPSHIRE";code="33";}
+          if(state=="nj")
+            {name="NEW JERSY"; code="34";}
+          if(state=="nm")
+            {name="NEW MEXICO";code="35";}
+          if(state=="ny")
+            {name="NEW YORK";code="36";}
+          if(state=="nc")
+            {name="NORTH CAROLINA";code="37";}
+          if(state=="nd")
+            {name="NORTH DAKOTA";code="38";}
+          if(state=="oh")
+            {name="OHIO";code="39"}
+          if(state=="ok")
+            {name="OKLAHOMA";code="40";}
+          if(state=="or")
+            {name="OREGON";code="41";}
+          if(state=="pa")
+            {name="PENNSYLVANIA"; code="42";}
+          if(state=="ri")
+            {name="RHODE ISLAND";code="44";}
+          if(state=="sc")
+            {name="SOUTH CAROLINA";code="45";}
+          if(state=="sd")
+            {name="SOUTH DAKOTA";code="46";}
+          if(state=="tn")
+            {name="TENNESSEE";code="47";}
+          if(state=="tx")
+            {name="TEXAS";code="48"}
+          if(state=="ut")
+            {name="UTAH";code="49";}
+          if(state=="vt")
+            {name="VERMONT";code="50";}
+          if(state=="va")
+            {name="VIRGINIA";code="51";}
+          if(state=="wa")
+            {name="WASHINGTON";code="53";}
+          if(state=="wv")
+            {name="WEST VIRGINIA";code="54";}
+          if(state=="wi")
+            {name="WISCONSIN";code="55";}
+          if(state=="wy")
+            {name="WYOMING";code="56";}
+          if(state=="pr")
+            {name="PUERTO RICO";code="72";}
+          console.log(name);
+                    console.log(code);
+
+          document.getElementById("stname").value = name;
+          if (typeof(Storage) !== "undefined") {
+   
+    localStorage.setItem("stname", name);
+    localStorage.setItem("stcode", code);
+     console.log(localStorage.getItem("stname")); 
+     console.log(localStorage.getItem("stcode")); 
+    
+} else {
+    console.log("Sorry, your browser does not support Web Storage...");
+}
+         };  
+
+       
+      })(usRaphael[state], state);
+    }
+
+
+     
+
+
+  };
+
+  
+</script>
+<script type="text/javascript">
+    
+    function verify_w(){
+        var CatName = document.getElementById('stname');
+        var sbmtBtn = document.getElementById('water_button');
+        if (CatName.value.length != 0) {
+          window.location.href = "water.html";}}
+</script>
+<script type="text/javascript">
+    
+    function verify_e(){
+        var CatName = document.getElementById('stname');
+        var sbmtBtn = document.getElementById('water_button');
+        if (CatName.value.length != 0) {
+          window.location.href = "elect.html";}}
+</script>
+<script type="text/javascript">
+    
+    function verify_f(){
+        var CatName = document.getElementById('stname');
+        var sbmtBtn = document.getElementById('water_button');
+        if (CatName.value.length != 0) {
+          window.location.href = "fuel.html";}}
+</script>
+<script type="text/javascript">
+    
+    function verify_t(){
+        var CatName = document.getElementById('stname');
+        var sbmtBtn = document.getElementById('water_button');
+        if (CatName.value.length != 0) {
+          window.location.href = "trp.html";}}
+</script>
+<script type="text/javascript">
+    
+    function verify_p(){
+        var CatName = document.getElementById('stname');
+        var sbmtBtn = document.getElementById('water_button');
+        if (CatName.value.length != 0) {
+          window.location.href = "lang.html";}}
+</script>
+<script type="text/javascript">
+    
+    function verify_r(){
+        var CatName = document.getElementById('stname');
+        var sbmtBtn = document.getElementById('water_button');
+        if (CatName.value.length != 0) {
+          window.location.href = "rent.html";}}
+</script>
+<div class="row">
+    <div class="col-md-8">
+
+<svg id="frame" style="margin-top:10%; margin-left:5%;height:100%;width:100%" viewBox="0 0 1200 700"
+  preserveAspectRatio="xMidYMid"></svg>
+ </div>
+ <div class="col-md-4">
+<div class="form">
+      <h1 style="color:white;font-size: 2vw;">Please choose a state by clicking on it</h1>
+      <input id="stname" style="color:white" type="text" placeholder=" State Name" readonly="true"/>
+      <div class="field-wrap"> </div>
+      <button class="button button-block" id="water_button" onclick="verify_w()"/>Water Cost</button>
+      <div class="field-wrap"></div>
+      <button class="button button-block" id="water_button" onclick="verify_f()"/>Fuel Cost</button>
+      <div class="field-wrap"></div>
+      <button class="button button-block" id="water_button" onclick="verify_e()"/>Electricity cost</button>
+      <div class="field-wrap"></div>
+      <button class="button button-block" id="water_button" onclick="verify_r()"/>Rent Cost</button>
+      <div class="field-wrap"></div>
+      <button class="button button-block" id="water_button" onclick="verify_p()"/>Population</button>
+      <div class="field-wrap"></div>
+       <button class="button button-block" id="water_button" onclick="verify_t()"/>Transportation</button>
+</div> 
+
+     </div>    
+     </div>   
+ 
+</body>
+</html>

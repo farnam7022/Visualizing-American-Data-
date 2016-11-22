@@ -1,0 +1,1722 @@
+<html>
+  <head>
+    
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="js/d3.js" charset="utf-8"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/test.css">
+  <link rel="stylesheet" type="text/css" href="css/lang.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js">
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+
+<script src="http://www.amcharts.com/lib/3/amcharts.js" type="text/javascript"></script>
+<script src="http://www.amcharts.com/lib/3/serial.js" type="text/javascript"></script>
+
+<style>
+#chartdiv {
+    width       : 100%;
+    height      : 70%;
+    font-size   : 11px;
+    
+    overflow:hidden;
+}   
+
+ .row {
+    margin-right: 0px;
+    margin-left: 0px;
+    margin-top:3%;
+}
+.p{
+  color:white;
+  text-align: center;
+  color: #ffffff;
+  font-size: 2vw;
+   font-family: 'Titillium Web', sans-serif;
+    margin-top:1% ;
+}
+
+</style>
+    <script type="text/javascript">
+jQuery(function(){
+    var max = 15;
+    var checkboxes = $('input[type="checkbox"]');
+                       
+    checkboxes.change(function(){
+        var current = checkboxes.filter(':checked').length;
+        checkboxes.filter(':not(:checked)').prop('disabled', current >= max);
+        
+    });});
+
+var name=localStorage.getItem("stname"); 
+var code=localStorage.getItem("stcode");
+ window.onload = function(){document.getElementById('boldStuff').innerHTML = name; 
+   var checkboxes = document.getElementsByTagName("input");
+
+   for(var x=0; x<checkboxes.length; x++)
+   {
+      if(checkboxes[x].type == "checkbox")
+      {
+          checkboxes[x].checked = false;
+      }
+   }
+
+}
+
+
+var ger=0;var dut=0;var swe=0;var ital=0;var fre=0;var res="";
+var da=0;var nor=0;var sp=0;var po=0;var rom=0;var ir=0;var g=0;var rus=0;var arm=0;var per=0;var u=0;var kur=0;var hin=0;var tur=0;
+var af=0;var ind=0;var vit=0;var kor=0;var ja=0;var ch=0;var thai=0;var ar=0;
+var c1=0;var c2=0;var c3=0;var c4=0;var c5=0;var c6=0;var c7=0;var c8=0;var c9=0;var c10=0;
+var c11=0;var c12=0;var c13=0;var c14=0;var c15=0;
+
+console.log(name);
+console.log(code);
+
+
+d3.csv("lang.csv", function(error, csv) {
+  if (error) throw error;
+
+  var data = csv;
+
+  for(var i=0; i<data.length;i++)
+  {
+    if(data[i].c1==code)
+    {
+      index=i;
+      break;
+    }
+  }
+
+  for(var i=index; i<data.length;i++)
+  {
+    if(data[i].c1!=code)
+    {
+      index2=i;
+      break;
+    }
+  }
+  
+for(var i=index; i<index2;i++)
+{
+if(data[i].c2=="607"){++ger;}
+if(data[i].c2=="608" || data[i].c2=="610"){++dut;}
+if(data[i].c2=="623" || data[i].c2=="620"){++fre;}
+if(data[i].c2=="614"){++swe;}
+if(data[i].c2=="619"){++ital;}
+if(data[i].c2=="615"){++da;}
+if(data[i].c2=="657" || data[i].c2=="671" || data[i].c2=="676"){++u;}
+if(data[i].c2=="663" || data[i].c2=="662" || data[i].c2=="664" || data[i].c2=="665" ||data[i].c2=="674" || data[i].c2=="966"){++hin;}
+if(data[i].c2=="616"){++nor;}
+if(data[i].c2=="625"){++sp;}
+if(data[i].c2=="929"){++po;}
+if(data[i].c2=="631"){++rom;}
+if(data[i].c2=="635"){++ir;}
+if(data[i].c2=="637"){++g;}
+if(data[i].c2=="655"){++arm;}
+if(data[i].c2=="656"){++per;}
+if(data[i].c2=="658"){++kur;}
+if(data[i].c2=="691"){++tur;}
+if(data[i].c2=="639" || data[i].c2=="641" || data[i].c2=="645" || data[i].c2=="646"){++rus;}
+if(data[i].c2=="708"){++ch;}
+if(data[i].c2=="723"){++ja;}
+if(data[i].c2=="724"){++kor;}
+if(data[i].c2=="728"){++vit;}
+if(data[i].c2=="732"){++ind;}
+if(data[i].c2=="799"){++af;}
+if(data[i].c2=="720" || data[i].c2=="725"){++thai;}
+if(data[i].c2=="777" || data[i].c2=="779"){++ar;}
+
+
+} 
+
+});
+
+var chartData="";
+
+function data (){
+    var display = "";
+    checkboxes = document.getElementsByName("check");
+    for( var i=0; i<checkboxes.length; i++){
+        if( checkboxes[i].checked ){
+            display += checkboxes[i].value+" ";
+        }
+    }
+    res = display.split(" ");
+   
+
+
+
+switch(res[0]) {
+    case "German":
+        c1=ger;
+        break;
+    case "Dutch":
+        c1=dut;
+        break;
+    case "Swedish":
+        c1=swe;
+        break;
+    case "Italian":
+        c1=ital;
+        break;
+    case "French":
+        c1=fre;
+        break;
+    case "Danish":
+        c1=da;
+        break;
+         case "Norwegian":
+        c1=nor;
+        break;
+    case "Spanish":
+        c1=sp;
+        break;
+    case "Portuguese":
+        c1=po;
+        break;
+    case "Romanian":
+        c1=rom;
+        break;
+    case "Irish":
+        c1=ir;
+        break;
+    case "Greek":
+        c1=g;
+        break;
+         case "Russian":
+        c1=rus;
+        break;
+    case "Armenian":
+        c1=arm;
+        break;
+    case "Persian":
+        c1=per;
+        break;
+    case "Urdu":
+        c1=u;
+        break;
+    case "Kurdish":
+        c1=kur;
+        break;
+    case "Hindi":
+        c1=hin;
+        break;
+   case "Turkish":
+        c1=tur;
+        break;
+        case "Chinese":
+        c1=ch;
+        break;
+         case "Thai":
+        c1=thai;
+        break;
+    case "Japanese":
+        c1=ja;
+        break;
+    case "Korean":
+        c1=kor;
+        break;
+    case "Vietnamese":
+        c1=vit;
+        break;
+    case "Indonesian":
+        c1=ind;
+        break;
+    case "Arabic":
+        c1=ar;
+        break;
+   case "African":
+        c1=af;
+        break;
+   
+}
+
+switch(res[1]) {
+    case "German":
+        c2=ger;
+        break;
+    case "Dutch":
+        c2=dut;
+        break;
+    case "Swedish":
+        c2=swe;
+        break;
+    case "Italian":
+        c2=ital;
+        break;
+    case "French":
+        c2=fre;
+        break;
+    case "Danish":
+        c2=da;
+        break;
+         case "Norwegian":
+        c2=nor;
+        break;
+    case "Spanish":
+        c2=sp;
+        break;
+    case "Portuguese":
+        c2=po;
+        break;
+    case "Romanian":
+        c2=rom;
+        break;
+    case "Irish":
+        c2=ir;
+        break;
+    case "Greek":
+        c2=g;
+        break;
+         case "Russian":
+        c2=rus;
+        break;
+    case "Armenian":
+        c2=arm;
+        break;
+    case "Persian":
+        c2=per;
+        break;
+    case "Urdu":
+        c2=u;
+        break;
+    case "Kurdish":
+        c2=kur;
+        break;
+    case "Hindi":
+        c2=hin;
+        break;
+   case "Turkish":
+        c2=tur;
+        break;
+        case "Chinese":
+        c2=ch;
+        break;
+         case "Thai":
+        c2=thai;
+        break;
+    case "Japanese":
+        c2=ja;
+        break;
+    case "Korean":
+        c2=kor;
+        break;
+    case "Vietnamese":
+        c2=vit;
+        break;
+    case "Indonesian":
+        c2=ind;
+        break;
+    case "Arabic":
+        c2=ar;
+        break;
+   case "African":
+        c2=af;
+        break;
+   
+}
+
+switch(res[2]) {
+    case "German":
+        c3=ger;
+        break;
+    case "Dutch":
+        c3=dut;
+        break;
+    case "Swedish":
+        c3=swe;
+        break;
+    case "Italian":
+        c3=ital;
+        break;
+    case "French":
+        c3=fre;
+        break;
+    case "Danish":
+        c3=da;
+        break;
+         case "Norwegian":
+        c3=nor;
+        break;
+    case "Spanish":
+        c3=sp;
+        break;
+    case "Portuguese":
+        c3=po;
+        break;
+    case "Romanian":
+        c3=rom;
+        break;
+    case "Irish":
+        c3=ir;
+        break;
+    case "Greek":
+        c3=g;
+        break;
+         case "Russian":
+        c3=rus;
+        break;
+    case "Armenian":
+        c3=arm;
+        break;
+    case "Persian":
+        c3=per;
+        break;
+    case "Urdu":
+        c3=u;
+        break;
+    case "Kurdish":
+        c3=kur;
+        break;
+    case "Hindi":
+        c3=hin;
+        break;
+   case "Turkish":
+        c3=tur;
+        break;
+        case "Chinese":
+        c3=ch;
+        break;
+         case "Thai":
+        c3=thai;
+        break;
+    case "Japanese":
+        c3=ja;
+        break;
+    case "Korean":
+        c3=kor;
+        break;
+    case "Vietnamese":
+        c3=vit;
+        break;
+    case "Indonesian":
+        c3=ind;
+        break;
+    case "Arabic":
+        c3=ar;
+        break;
+   case "African":
+        c3=af;
+        break;
+   
+}
+
+
+
+   switch(res[3]) {
+    case "German":
+        c4=ger;
+        break;
+    case "Dutch":
+        c4=dut;
+        break;
+    case "Swedish":
+        c4=swe;
+        break;
+    case "Italian":
+        c4=ital;
+        break;
+    case "French":
+        c4=fre;
+        break;
+    case "Danish":
+        c4=da;
+        break;
+         case "Norwegian":
+        c4=nor;
+        break;
+    case "Spanish":
+        c4=sp;
+        break;
+    case "Portuguese":
+        c4=po;
+        break;
+    case "Romanian":
+        c4=rom;
+        break;
+    case "Irish":
+        c4=ir;
+        break;
+    case "Greek":
+        c4=g;
+        break;
+         case "Russian":
+        c4=rus;
+        break;
+    case "Armenian":
+        c4=arm;
+        break;
+    case "Persian":
+        c4=per;
+        break;
+    case "Urdu":
+        c4=u;
+        break;
+    case "Kurdish":
+        c4=kur;
+        break;
+    case "Hindi":
+        c4=hin;
+        break;
+   case "Turkish":
+        c4=tur;
+        break;
+        case "Chinese":
+        c4=ch;
+        break;
+         case "Thai":
+        c4=thai;
+        break;
+    case "Japanese":
+        c4=ja;
+        break;
+    case "Korean":
+        c4=kor;
+        break;
+    case "Vietnamese":
+        c4=vit;
+        break;
+    case "Indonesian":
+        c4=ind;
+        break;
+    case "Arabic":
+        c4=ar;
+        break;
+   case "African":
+        c4=af;
+        break;
+   
+} 
+
+switch(res[4]) {
+    case "German":
+        c5=ger;
+        break;
+    case "Dutch":
+        c5=dut;
+        break;
+    case "Swedish":
+        c5=swe;
+        break;
+    case "Italian":
+        c5=ital;
+        break;
+    case "French":
+        c5=fre;
+        break;
+    case "Danish":
+        c5=da;
+        break;
+         case "Norwegian":
+        c5=nor;
+        break;
+    case "Spanish":
+        c5=sp;
+        break;
+    case "Portuguese":
+        c5=po;
+        break;
+    case "Romanian":
+        c5=rom;
+        break;
+    case "Irish":
+        c5=ir;
+        break;
+    case "Greek":
+        c5=g;
+        break;
+         case "Russian":
+        c5=rus;
+        break;
+    case "Armenian":
+        c5=arm;
+        break;
+    case "Persian":
+        c5=per;
+        break;
+    case "Urdu":
+        c5=u;
+        break;
+    case "Kurdish":
+        c5=kur;
+        break;
+    case "Hindi":
+        c5=hin;
+        break;
+   case "Turkish":
+        c5=tur;
+        break;
+        case "Chinese":
+        c5=ch;
+        break;
+         case "Thai":
+        c5=thai;
+        break;
+    case "Japanese":c5
+        c5=ja;
+        break;
+    case "Korean":
+        c5=kor;
+        break;
+    case "Vietnamese":
+        c5=vit;
+        break;
+    case "Indonesian":
+        c5=ind;
+        break;
+    case "Arabic":
+        c5=ar;
+        break;
+   case "African":
+        c5=af;
+        break;
+   
+}
+
+switch(res[5]) {
+    case "German":
+        c6=ger;
+        break;
+    case "Dutch":
+        c6=dut;
+        break;
+    case "Swedish":
+        c6=swe;
+        break;
+    case "Italian":
+        c6=ital;
+        break;
+    case "French":
+        c6=fre;
+        break;
+    case "Danish":
+        c6=da;
+        break;
+         case "Norwegian":
+        c6=nor;
+        break;
+    case "Spanish":
+        c6=sp;
+        break;
+    case "Portuguese":
+        c6=po;
+        break;
+    case "Romanian":
+        c6=rom;
+        break;
+    case "Irish":
+        c6=ir;
+        break;
+    case "Greek":
+        c6=g;
+        break;
+         case "Russian":
+        c6=rus;
+        break;
+    case "Armenian":
+        c6=arm;
+        break;
+    case "Persian":
+        c6=per;
+        break;
+    case "Urdu":
+        c6=u;
+        break;
+    case "Kurdish":
+        c6=kur;
+        break;
+    case "Hindi":
+        c6=hin;
+        break;
+   case "Turkish":
+        c6=tur;
+        break;
+        case "Chinese":
+        c6=ch;
+        break;
+         case "Thai":
+        c6=thai;
+        break;
+    case "Japanese":
+        c6=ja;
+        break;
+    case "Korean":
+        c6=kor;
+        break;
+    case "Vietnamese":
+        c6=vit;
+        break;
+    case "Indonesian":
+        c6=ind;
+        break;
+    case "Arabic":
+        c6=ar;
+        break;
+   case "African":
+        c6=af;
+        break;
+   
+}
+
+
+switch(res[6]) {
+    case "German":
+        c7=ger;c7
+        break;
+    case "Dutch":
+        c7=dut;
+        break;
+    case "Swedish":
+        c7=swe;
+        break;
+    case "Italian":
+        c7=ital;
+        break;
+    case "French":
+        c7=fre;
+        break;
+    case "Danish":
+        c7=da;c7
+        break;
+         case "Norwegian":
+        c7=nor;
+        break;
+    case "Spanish":
+        c7=sp;
+        break;
+    case "Portuguese":
+        c7=po;
+        break;
+    case "Romanian":
+        c7=rom;
+        break;
+    case "Irish":
+        c7=ir;
+        break;
+    case "Greek":
+        c7=g;
+        break;
+         case "Russian":
+        c7=rus;
+        break;
+    case "Armenian":
+        c7=arm;
+        break;
+    case "Persian":
+        c7=per;
+        break;
+    case "Urdu":
+        c7=u;
+        break;
+    case "Kurdish":
+        c7=kur;
+        break;
+    case "Hindi":
+        c7=hin;
+        break;
+   case "Turkish":
+        c7=tur;
+        break;
+        case "Chinese":
+        c7=ch;
+        break;
+         case "Thai":
+        c7=thai;
+        break;
+    case "Japanese":
+        c7=ja;
+        break;
+    case "Korean":
+        c7=kor;
+        break;
+    case "Vietnamese":
+        c7=vit;
+        break;
+    case "Indonesian":
+        c7=ind;
+        break;
+    case "Arabic":
+        c7=ar;
+        break;
+   case "African":
+        c7=af;
+        break;
+   
+}
+
+switch(res[7]) {
+    case "German":
+        c8=ger;
+        break;
+    case "Dutch":
+        c8=dut;
+        break;
+    case "Swedish":
+        c8=swe;
+        break;
+    case "Italian":
+        c8=ital;
+        break;
+    case "French":
+        c8=fre;
+        break;c8
+    case "Danish":
+        c8=da;
+        break;
+         case "Norwegian":
+        c8=nor;
+        break;
+    case "Spanish":
+        c8=sp;
+        break;
+    case "Portuguese":
+        c8=po;
+        break;
+    case "Romanian":
+        c8=rom;
+        break;
+    case "Irish":
+        c8=ir;
+        break;
+    case "Greek":
+        c8=g;
+        break;
+         case "Russian":
+        c8=rus;
+        break;
+    case "Armenian":
+        c8=arm;
+        break;
+    case "Persian":
+        c8=per;
+        break;
+    case "Urdu":
+        c8=u;
+        break;
+    case "Kurdish":
+        c8=kur;
+        break;
+    case "Hindi":
+        c8=hin;
+        break;
+   case "Turkish":
+        c8=tur;
+        break;
+        case "Chinese":
+        c8=ch;
+        break;
+         case "Thai":
+        c8=thai;
+        break;
+    case "Japanese":
+        c8=ja;
+        break;
+    case "Korean":
+        c8=kor;
+        break;
+    case "Vietnamese":
+        c8=vit;
+        break;
+    case "Indonesian":
+        c8=ind;
+        break;
+    case "Arabic":
+        c8=ar;
+        break;
+   case "African":
+        c8=af;
+        break;
+   
+}
+
+switch(res[8]) {
+    case "German":
+        c9=ger;
+        break;
+    case "Dutch":
+        c9=dut;
+        break;
+    case "Swedish":
+        c9=swe;
+        break;
+    case "Italian":
+        c9=ital;
+        break;
+    case "French":
+        c9=fre;
+        break;
+    case "Danish":
+        c9=da;
+        break;
+         case "Norwegian":
+        c9=nor;
+        break;
+    case "Spanish":
+        c9=sp;
+        break;
+    case "Portuguese":
+        c9=po;
+        break;
+    case "Romanian":
+        c9=rom;
+        break;
+    case "Irish":
+        c9=ir;
+        break;
+    case "Greek":
+        c9=g;
+        break;
+         case "Russian":
+        c9=rus;
+        break;
+    case "Armenian":
+        c9=arm;
+        break;
+    case "Persian":
+        c9=per;
+        break;
+    case "Urdu":
+        c9=u;
+        break;
+    case "Kurdish":
+        c9=kur;
+        break;
+    case "Hindi":
+        c9=hin;
+        break;
+   case "Turkish":
+        c9=tur;
+        break;
+        case "Chinese":
+        c9=ch;
+        break;
+         case "Thai":
+        c9=thai;
+        break;
+    case "Japanese":
+        c9=ja;
+        break;
+    case "Korean":
+        c9=kor;
+        break;
+    case "Vietnamese":
+        c9=vit;
+        break;
+    case "Indonesian":
+        c9=ind;
+        break;
+    case "Arabic":
+        c9=ar;
+        break;
+   case "African":
+        c9=af;
+        break;
+   
+}
+
+switch(res[9]) {
+    case "German":
+        c10=ger;
+        break;
+    case "Dutch":
+        c10=dut;
+        break;
+    case "Swedish":
+        c10=swe;
+        break;
+    case "Italian":
+        c10=ital;
+        break;
+    case "French":
+        c10=fre;
+        break;
+    case "Danish":
+        c10=da;
+        break;
+         case "Norwegian":
+        c10=nor;
+        break;
+    case "Spanish":
+        c10=sp;
+        break;
+    case "Portuguese":
+        c10=po;
+        break;
+    case "Romanian":
+        c10=rom;
+        break;
+    case "Irish":
+        c10=ir;
+        break;
+    case "Greek":
+        c10=g;
+        break;
+         case "Russian":
+        c10=rus;
+        break;
+    case "Armenian":
+        c10=arm;
+        break;
+    case "Persian":
+        c10=per;
+        break;
+    case "Urdu":
+        c10=u;
+        break;
+    case "Kurdish":
+        c10=kur;
+        break;
+    case "Hindi":
+        c10=hin;
+        break;
+   case "Turkish":
+        c10=tur;
+        break;
+        case "Chinese":
+        c10=ch;
+        break;
+         case "Thai":
+        c10=thai;
+        break;
+    case "Japanese":
+        c10=ja;
+        break;
+    case "Korean":
+        c10=kor;
+        break;
+    case "Vietnamese":
+        c10=vit;
+        break;
+    case "Indonesian":
+        c10=ind;
+        break;
+    case "Arabic":
+        c10=ar;
+        break;
+   case "African":
+        c10=af;
+        break;
+   
+}
+
+switch(res[10]) {
+    case "German":
+        c11=ger;
+        break;
+    case "Dutch":
+        c11=dut;
+        break;
+    case "Swedish":
+        c11=swe;
+        break;
+    case "Italian":
+        c11=ital;
+        break;
+    case "French":
+        c11=fre;
+        break;
+    case "Danish":
+        c11=da;
+        break;
+         case "Norwegian":
+        c11=nor;
+        break;
+    case "Spanish":
+        c11=sp;
+        break;
+    case "Portuguese":
+        c11=po;
+        break;
+    case "Romanian":
+        c11=rom;
+        break;
+    case "Irish":
+        c11=ir;
+        break;
+    case "Greek":
+        c11=g;
+        break;
+         case "Russian":
+        c11=rus;
+        break;
+    case "Armenian":
+        c11=arm;
+        break;
+    case "Persian":
+        c11=per;
+        break;
+    case "Urdu":
+        c11=u;
+        break;
+    case "Kurdish":
+        c11=kur;
+        break;
+    case "Hindi":
+        c11=hin;
+        break;
+   case "Turkish":
+        c11=tur;
+        break;
+        case "Chinese":
+        c11=ch;
+        break;
+         case "Thai":
+        c11=thai;
+        break;
+    case "Japanese":
+        c11=ja;
+        break;
+    case "Korean":
+        c11=kor;
+        break;
+    case "Vietnamese":
+        c11=vit;
+        break;
+    case "Indonesian":
+        c11=ind;
+        break;
+    case "Arabic":
+        c11=ar;
+        break;
+   case "African":
+        c11=af;
+        break;
+   
+}
+
+switch(res[11]) {
+    case "German":
+        c12=ger;
+        break;
+    case "Dutch":
+        c12=dut;
+        break;
+    case "Swedish":
+        c12=swe;
+        break;
+    case "Italian":
+        c12=ital;
+        break;
+    case "French":
+        c12=fre;
+        break;
+    case "Danish":
+        c12=da;
+        break;
+         case "Norwegian":
+        c12=nor;
+        break;
+    case "Spanish":
+        c12=sp;
+        break;
+    case "Portuguese":
+        c12=po;
+        break;
+    case "Romanian":
+        c12=rom;
+        break;
+    case "Irish":
+        c12=ir;
+        break;
+    case "Greek":
+        c12=g;
+        break;
+         case "Russian":
+        c12=rus;
+        break;
+    case "Armenian":
+        c12=arm;
+        break;
+    case "Persian":
+        c12=per;
+        break;
+    case "Urdu":
+        c12=u;
+        break;
+    case "Kurdish":
+        c12=kur;
+        break;
+    case "Hindi":
+        c12=hin;
+        break;
+   case "Turkish":
+        c12=tur;
+        break;
+        case "Chinese":
+        c12=ch;
+        break;
+         case "Thai":
+        c12=thai;
+        break;
+    case "Japanese":
+        c12=ja;
+        break;
+    case "Korean":
+        c12=kor;
+        break;
+    case "Vietnamese":
+        c12=vit;
+        break;
+    case "Indonesian":
+        c12=ind;
+        break;
+    case "Arabic":
+        c12=ar;
+        break;
+   case "African":
+        c12=af;
+        break;
+   
+}
+
+switch(res[12]) {
+    case "German":
+        c13=ger;
+        break;
+    case "Dutch":
+        c13=dut;
+        break;
+    case "Swedish":
+        c13=swe;
+        break;
+    case "Italian":
+        c13=ital;
+        break;
+    case "French":
+        c13=fre;
+        break;
+    case "Danish":
+        c13=da;
+        break;
+         case "Norwegian":
+        c13=nor;
+        break;
+    case "Spanish":
+        c13=sp;
+        break;
+    case "Portuguese":
+        c13=po;
+        break;
+    case "Romanian":
+        c13=rom;
+        break;
+    case "Irish":
+        c13=ir;
+        break;
+    case "Greek":
+        c13=g;
+        break;
+         case "Russian":
+        c13=rus;
+        break;
+    case "Armenian":
+        c13=arm;
+        break;
+    case "Persian":
+        c13=per;
+        break;
+    case "Urdu":
+        c13=u;
+        break;
+    case "Kurdish":
+        c13=kur;
+        break;
+    case "Hindi":
+        c13=hin;
+        break;
+   case "Turkish":
+        c13=tur;
+        break;
+        case "Chinese":
+        c13=ch;
+        break;
+         case "Thai":
+        c13=thai;
+        break;
+    case "Japanese":
+        c13=ja;
+        break;
+    case "Korean":
+        c13=kor;
+        break;
+    case "Vietnamese":
+        c13=vit;
+        break;
+    case "Indonesian":
+        c13=ind;
+        break;
+    case "Arabic":
+        c13=ar;
+        break;
+   case "African":
+        c13=af;
+        break;
+   
+}
+
+
+switch(res[13]) {
+    case "German":
+        c14=ger;
+        break;
+    case "Dutch":
+        c14=dut;
+        break;
+    case "Swedish":
+        c14=swe;
+        break;
+    case "Italian":
+        c14=ital;
+        break;
+    case "French":
+        c14=fre;
+        break;
+    case "Danish":
+        c14=da;
+        break;
+         case "Norwegian":
+        c14=nor;
+        break;
+    case "Spanish":
+        c14=sp;
+        break;
+    case "Portuguese":
+        c14=po;
+        break;
+    case "Romanian":
+        c14=rom;
+        break;
+    case "Irish":
+        c14=ir;
+        break;
+    case "Greek":
+        c14=g;
+        break;
+         case "Russian":
+        c14=rus;
+        break;
+    case "Armenian":
+        c14=arm;
+        break;
+    case "Persian":
+        c14=per;
+        break;
+    case "Urdu":
+        c14=u;
+        break;
+    case "Kurdish":
+        c14=kur;
+        break;
+    case "Hindi":
+        c14=hin;
+        break;
+   case "Turkish":
+        c14=tur;
+        break;
+        case "Chinese":
+        c14=ch;
+        break;
+         case "Thai":
+        c14=thai;
+        break;
+    case "Japanese":
+        c14=ja;
+        break;
+    case "Korean":
+        c14=kor;
+        break;
+    case "Vietnamese":
+        c14=vit;
+        break;
+    case "Indonesian":
+        c14=ind;
+        break;
+    case "Arabic":
+        c14=ar;
+        break;
+   case "African":
+        c14=af;
+        break;
+   
+}
+
+switch(res[14]) {
+    case "German":
+        c15=ger;
+        break;
+    case "Dutch":
+        c15=dut;
+        break;
+    case "Swedish":
+        c15=swe;
+        break;
+    case "Italian":
+        c15=ital;
+        break;
+    case "French":
+        c15=fre;
+        break;
+    case "Danish":
+        c15=da;
+        break;
+         case "Norwegian":
+        c15=nor;
+        break;
+    case "Spanish":
+        c15=sp;
+        break;
+    case "Portuguese":
+        c15=po;
+        break;
+    case "Romanian":
+        c15=rom;
+        break;
+    case "Irish":
+        c15=ir;
+        break;
+    case "Greek":
+        c15=g;
+        break;
+         case "Russian":
+        c15=rus;
+        break;
+    case "Armenian":
+        c15=arm;
+        break;
+    case "Persian":
+        c15=per;
+        break;
+    case "Urdu":
+        c15=u;
+        break;
+    case "Kurdish":
+        c15=kur;
+        break;
+    case "Hindi":
+        c15=hin;
+        break;
+   case "Turkish":
+        c15=tur;
+        break;
+        case "Chinese":
+        c15=ch;
+        break;
+         case "Thai":
+        c15=thai;
+        break;
+    case "Japanese":
+        c15=ja;
+        break;
+    case "Korean":
+        c15=kor;
+        break;
+    case "Vietnamese":
+        c15=vit;
+        break;
+    case "Indonesian":
+        c15=ind;
+        break;
+    case "Arabic":
+        c15=ar;
+        break;
+   case "African":
+        c15=af;
+        break;
+   
+}
+
+if(res[0]=="" || res[0]==undefined){res[0]="";}
+if(res[1]=="" || res[1]==undefined){res[1]="";}
+if(res[2]=="" || res[2]==undefined){res[2]="";}
+if(res[3]=="" || res[3]==undefined){res[3]="";}
+if(res[4]=="" || res[4]==undefined){res[4]="";}
+if(res[5]=="" || res[5]==undefined){res[5]="";}
+if(res[6]=="" || res[6]==undefined){res[6]="";}
+if(res[7]=="" || res[7]==undefined){res[7]="";}
+if(res[8]=="" || res[8]==undefined){res[8]="";}
+if(res[9]=="" || res[9]==undefined){res[9]="";}
+if(res[10]=="" || res[10]==undefined){res[10]="";}
+if(res[11]=="" || res[11]==undefined){res[11]="";}
+if(res[13]=="" || res[13]==undefined){res[13]="";}
+if(res[12]=="" || res[12]==undefined){res[12]="";}
+if(res[14]=="" || res[14]==undefined){res[14]="";}
+
+
+}
+
+
+function chart(){
+ c1=0; c2=0; c3=0;c4=0;c5=0;c6=0;c7=0;c8=0; c9=0;c10=0;
+ c11=0; c12=0;c13=0;c14=0;c15=0;
+
+data();
+
+var chart = AmCharts.makeChart("chartdiv", {
+    "theme": "light",
+    "type": "serial",
+    "startDuration": 2,
+    "dataProvider": [{
+	  "country": res[0],
+		"visits": c1,
+    "color": "#FF0F00"
+	},
+	{
+		"country": res[1],
+		"visits": c2,
+    "color": "#FF6600"
+	}, 
+	{
+		"country": res[2],
+		"visits": c3,
+    "color": "#FF9E01"
+	}, 
+	{
+	  "country": res[3],
+		"visits": c4,
+    "color": "#FCD202"
+	}, 
+	{
+		"country": res[4],
+		"visits": c5,
+    "color": "#F8FF01"
+	}, 
+	{
+		"country": res[5],
+		"visits": c6,
+    "color": "#B0DE09"
+	}, 
+	{
+		"country": res[6],
+		"visits": c7,
+    "color": "#04D215"
+    
+	}, 
+	{
+		"country": res[7],
+		"visits": c8,
+    "color": "#0D8ECF"
+	}, 
+	{
+		"country": res[8],
+		"visits": c9,
+    "color": "#0D52D1"
+	}, 
+	{
+		"country": res[9],
+		"visits": c10,
+    "color": "#2A0CD0"
+	},
+    {
+        "country": res[10],
+        "visits": c11,
+    "color": "#8A0CCF"
+    },{
+        "country": res[11],
+        "visits": c12,
+    "color": "#CD0D74"
+    },{
+        "country": res[12],
+        "visits": c13,
+    "color": "#754DEB"
+    },{
+        "country": res[13],
+        "visits": c14,
+    "color": "#DDDDDD"
+    },{
+        "country": res[14],
+        "visits": c15,
+    "color": "#333333"
+    }
+	
+	
+	 
+	
+	
+	
+	
+],
+ "valueAxes": [{
+        "position": "left",
+        "title": "Number of people"
+    }],
+    "graphs": [{
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillColorsField": "color",
+        "fillAlphas": 1,
+        "lineAlpha": 0.1,
+        "type": "column",
+        "valueField": "visits"
+    }],
+    "depth3D": 20,
+    "angle": 30,
+    "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+    },    
+    "categoryField": "country",
+    "categoryAxis": {
+        "gridPosition": "start",
+        "labelRotation": 45
+    },
+    "export": {
+        "enabled": true
+     },
+ "responsive": {
+        "enabled": true
+      }
+});
+
+ 
+
+  jQuery('.chart-input').off().on('input change',function() {
+    var property    = jQuery(this).data('property');
+    var target      = chart;
+    chart.startDuration = 0;
+
+    if ( property == 'topRadius') {
+        target = chart.graphs[0];
+        if ( this.value == 0 ) {
+          this.value = undefined;
+        }
+    }
+
+    target[property] = this.value;
+    chart.validateNow();
+});
+console.log(res);
+}
+
+</script>
+
+  </head>
+  <body>
+    <p class="p">Number of people speaking a specific language in <b id="boldStuff"></b></p>
+    <div class="row" > 
+    <div class="col-md-8">
+        <div style="background-color:#A0CECF ;height:25px;width:150px;margin-top:30px;z-index: 10;position:absolute;margin-left:60px"></div>
+  	<div id="chartdiv"></div>
+    <div style="margin-top:5%">
+    <a href="#" class="button" style="
+    padding: 10px 40px;
+    margin-left:5%;
+   width:20%;
+    border-radius: 10px;
+    font-family: 'Helvetica', cursive;
+    
+    color: #FFF;text-align:center;
+    text-decoration: none;  
+    background-color: #3498DB;
+    border-bottom: 5px solid #2980B9;
+    text-shadow: 0px -2px #2980B9;
+    /* Animation */
+    transition: all 0.1s;
+    -webkit-transition: all 0.1s;" onClick="chart()">Draw the chart</a></div>
+</div>
+<div class="col-md-4">
+  	<div class="container">
+  <h1 style=" margin-left: 0px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, .4);
+  font-size: 1.8em;
+  text-align: center;font: 1.5em 'FontAwesome'">Please choose at most 15 languages</h1>
+  <div class="items">
+    <input  id="item1" type="checkbox" name="check" value="German">
+    <label  style="font: 1.5em 'FontAwesome'" for="item1">German</label>
+
+    <input id="item2" type="checkbox" name="check" value="Dutch">
+    <label style="font: 1.5em 'FontAwesome'" for="item2">Dutch</label>
+
+    <input id="item3" type="checkbox" name="check" value="Swedish">
+    <label style="font: 1.5em 'FontAwesome'" for="item3">Swedish</label>
+
+    <input id="item4" type="checkbox" name="check" value="Italian">
+    <label style="font: 1.5em 'FontAwesome'" for="item4">Italian</label>
+
+    <input id="item5" type="checkbox" name="check" value="French">
+    <label style="font: 1.5em 'FontAwesome'" for="item5">French</label>
+
+    <input id="item6" type="checkbox" name="check" value="Danish">
+    <label style="font: 1.5em 'FontAwesome'" for="item6">Danish</label>
+
+    <input id="item7" type="checkbox" name="check" value="Norwegian">
+    <label style="font: 1.5em 'FontAwesome'" for="item7">Norwegian</label>
+
+    <input id="item8" type="checkbox" name="check" value="Spanish">
+    <label style="font: 1.5em 'FontAwesome'" for="item8">Spanish</label>
+
+    <input id="item9" type="checkbox" name="check" value="Portugeuse">
+    <label style="font: 1.5em 'FontAwesome'" for="item9">Portuguese</label>
+
+    <input id="item10" type="checkbox" name="check" value="Romanian">
+    <label style="font: 1.5em 'FontAwesome'" for="item10">Romanian</label>
+
+    <input id="item11" type="checkbox" name="check" value="Irish">
+    <label style="font: 1.5em 'FontAwesome'" for="item11">Irish</label>
+
+    <input id="item12" type="checkbox" name="check" value="Greek">
+    <label style="font: 1.5em 'FontAwesome'" for="item12">Greek</label>
+
+    <input id="item13" type="checkbox" name="check" value="Russian">
+    <label style="font: 1.5em 'FontAwesome'" for="item13">Russian</label>
+
+    <input id="item14" type="checkbox" name="check" value="Armenian">
+    <label style="font: 1.5em 'FontAwesome'" for="item14">Armenian</label>
+
+    <input id="item15" type="checkbox" name="check" value="Persian">
+    <label style="font: 1.5em 'FontAwesome'" for="item15">Persian</label>
+
+    <input id="item16" type="checkbox" name="check" value="Urdu">
+    <label style="font: 1.5em 'FontAwesome'" for="item16">Urdu</label>
+
+    <input id="item17" type="checkbox" name="check" value="Kurdish">
+    <label style="font: 1.5em 'FontAwesome'" for="item17">Kurdish</label>
+
+    <input id="item18" type="checkbox" name="check" value="Hindi">
+    <label style="font: 1.5em 'FontAwesome'" for="item18">Hindi</label>
+
+    <input id="item19" type="checkbox" name="check" value="Turkish">
+    <label style="font: 1.5em 'FontAwesome'" for="item19">Turkish</label>
+
+    <input id="item20" type="checkbox" name="check" value="Chinese">
+    <label style="font: 1.5em 'FontAwesome'" for="item20">Chinese</label>
+
+    <input id="item21" type="checkbox" name="check" value="Thai">
+    <label style="font: 1.5em 'FontAwesome'" for="item21">Thai</label>
+
+    <input id="item22" type="checkbox" name="check" value="Japanes">
+    <label style="font: 1.5em 'FontAwesome'" for="item22">Japanes</label>
+
+    <input id="item23" type="checkbox" name="check" value="Korean">
+    <label style="font: 1.5em 'FontAwesome'"  for="item23">Korean</label>
+
+    <input id="item24" type="checkbox" name="check" value="Vietnamese">
+    <label style="font: 1.5em 'FontAwesome'" for="item24">Vietnamese</label>
+
+    <input id="item25" type="checkbox" name="check" value="Indonesian">
+    <label style="font: 1.5em 'FontAwesome'" for="item25">Indonesian</label>
+
+    <input id="item26" type="checkbox" name="check" value="Arabic">
+    <label style="font: 1.5em 'FontAwesome'" for="item26">Arabic</label>
+
+    <input id="item27" type="checkbox" name="check" value="African">
+    <label style="font: 1.5em 'FontAwesome'" for="item27">African</label>
+
+    <h2 style="font: 1.5em 'FontAwesome'" class="done" aria-hidden="true">Chosen</h2>
+    <h2 style="font: 1.5em 'FontAwesome'" class="undone" aria-hidden="true">Not chosen</h2>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+  </body>
+</html>
